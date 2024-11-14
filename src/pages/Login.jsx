@@ -1,14 +1,19 @@
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import loginImage from '../assets/image/login.svg';
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import loginImage from "../assets/image/login.svg";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/features/user/userSlice";
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = ({ email, password }) => {
     // Email Password Login
-
+    dispatch(loginUser({ email, password }));
     console.log(email, password);
+    reset();
+    navigate("/")
   };
 
   const handleGoogleLogin = () => {
@@ -30,7 +35,7 @@ const Login = () => {
                 type="email"
                 id="email"
                 className="w-full rounded-md"
-                {...register('email')}
+                {...register("email")}
               />
             </div>
             <div className="flex flex-col items-start">
@@ -39,7 +44,7 @@ const Login = () => {
                 type="password"
                 id="password"
                 className="w-full rounded-md"
-                {...register('password')}
+                {...register("password")}
               />
             </div>
             <div className="relative !mt-8">
@@ -49,10 +54,10 @@ const Login = () => {
             </div>
             <div>
               <p>
-                Don&apos;t have an account?{' '}
+                Don&apos;t have an account?{" "}
                 <span
                   className="text-primary hover:underline cursor-pointer"
-                  onClick={() => navigate('/signup')}
+                  onClick={() => navigate("/signup")}
                 >
                   Sign up
                 </span>
